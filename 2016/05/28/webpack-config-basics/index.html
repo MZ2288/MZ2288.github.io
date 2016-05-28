@@ -3,33 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>first post | Hexo</title>
+  <title>webpack config basics | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="TestHello World!
-Triple/app/components/Foo.js123456const foo = 55console.log(&quot;hello world&quot;)function bar () &amp;#123;  return 100&amp;#125;
-my first report
-
-hello
-world">
+  <meta name="description" content="Walking through the webpack.config.js fileWebpack is a module bundler.
+The webpack.config.js file exports an object with properties that will beused to configure the build of your application. This ob">
 <meta property="og:type" content="article">
-<meta property="og:title" content="first post">
-<meta property="og:url" content="http://yoursite.com/2016/05/15/first-post/index.html">
+<meta property="og:title" content="webpack config basics">
+<meta property="og:url" content="http://yoursite.com/2016/05/28/webpack-config-basics/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="TestHello World!
-Triple/app/components/Foo.js123456const foo = 55console.log(&quot;hello world&quot;)function bar () &amp;#123;  return 100&amp;#125;
-my first report
-
-hello
-world">
-<meta property="og:updated_time" content="2016-05-16T21:52:28.000Z">
+<meta property="og:description" content="Walking through the webpack.config.js fileWebpack is a module bundler.
+The webpack.config.js file exports an object with properties that will beused to configure the build of your application. This ob">
+<meta property="og:updated_time" content="2016-05-28T10:10:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="first post">
-<meta name="twitter:description" content="TestHello World!
-Triple/app/components/Foo.js123456const foo = 55console.log(&quot;hello world&quot;)function bar () &amp;#123;  return 100&amp;#125;
-my first report
-
-hello
-world">
+<meta name="twitter:title" content="webpack config basics">
+<meta name="twitter:description" content="Walking through the webpack.config.js fileWebpack is a module bundler.
+The webpack.config.js file exports an object with properties that will beused to configure the build of your application. This ob">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -92,13 +80,13 @@ world">
 
     <div class="row">
         <div class="col-sm-8 blog-main">
-          <article id="post-first-post" class="article article-type-post" itemscope itemprop="blogPost">
+          <article id="post-webpack-config-basics" class="article article-type-post" itemscope itemprop="blogPost">
 
   <header class="article-header">
     
   
     <h1 class="article-title" itemprop="name">
-      first post
+      webpack config basics
     </h1>
   
 
@@ -107,7 +95,7 @@ world">
 
   <div class="article-meta">
     <div class="article-datetime">
-  <a href="/2016/05/15/first-post/" class="article-date"><time datetime="2016-05-16T03:55:34.000Z" itemprop="datePublished">2016-05-15</time></a>
+  <a href="/2016/05/28/webpack-config-basics/" class="article-date"><time datetime="2016-05-28T09:01:16.000Z" itemprop="datePublished">2016-05-28</time></a>
 </div>
 
     
@@ -118,13 +106,15 @@ world">
 
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h2><p>Hello World!</p>
-<h3 id="Triple"><a href="#Triple" class="headerlink" title="Triple"></a>Triple</h3><figure class="highlight js"><figcaption><span>/app/components/Foo.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> foo = <span class="number">55</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"hello world"</span>)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">100</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>my first report</strong></p>
-<ul>
-<li>hello</li>
-<li>world </li>
-</ul>
+        <h1 id="Walking-through-the-webpack-config-js-file"><a href="#Walking-through-the-webpack-config-js-file" class="headerlink" title="Walking through the webpack.config.js file"></a>Walking through the webpack.config.js file</h1><p>Webpack is a module bundler.</p>
+<p>The webpack.config.js file exports an object with properties that will be<br>used to configure the build of your application. This object is a module bundle.</p>
+<p>This exported object will have an entry property defined.<br>The entry point is a file or array of files used as the<br>starting point of the module bundling or build process.  </p>
+<p>Webpack can be run in watch mode which triggers a rebuild when your files are<br>changed.</p>
+<p>Webpack has a dev server which can be used to serve your bundle locally from<br>memory.</p>
+<p>Webpack configuration allows for the specification of loaders and pre-loaders which<br>can preprocess files as you load or require() them.</p>
+<p>To add loaders to your config you need to add a key to your exported output<br>object called module. Module should point to another object. This object<br>should have a key called loaders which points to an array of objects.<br>Each loader object in this array can have configuration options as keys.<br>One option is a key called test which points to a regex used to<br>match file extensions. This selects which files will be processed by<br>this loader. Exclude is another option key that can specify which files this loader<br>should ignore. The loader key points to which loader we are actually going to use.<br>Query is an option key that points to a query string which passes options to the loader.</p>
+<p>Preloaders are essentially loaders that are run before loaders.</p>
+<p>The exported config object can include a key called resolve which points<br>to an object which contains a key called extensions which points to<br>array of strings naming file extensions. This allows files to require(‘filename’)<br>instead of require(‘filename.extension’).</p>
 
       
     </div>
@@ -135,7 +125,7 @@ world">
     
 
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/first-post/" data-id="cioqzz4ag00034of1l6x0sliq" class="article-share-link">
+      <a data-url="http://yoursite.com/2016/05/28/webpack-config-basics/" data-id="cioqzz4a500004of1jmd728h0" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -148,19 +138,12 @@ world">
 <ul id="article-nav" class="nav nav-pills nav-justified">
   
   <li role="presentation">
-    <a href="/2016/05/15/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/05/15/icons-using-fonts/" id="article-nav-older" class="article-nav-link-wrap">
       <i class="fa fa-chevron-left pull-left"></i>
-      <span class="article-nav-link-title">Hello World</span>
-    </a>
-  </li>
-  
-  
-  <li role="presentation">
-    <a href="/2016/05/15/icons-using-fonts/" id="article-nav-newer" class="article-nav-link-wrap">
       <span class="article-nav-link-title">icons using fonts</span>
-      <i class="fa fa-chevron-right pull-right"></i>
     </a>
   </li>
+  
   
 </ul>
 
