@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>what I learned building these apps | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="The basic counter app was my first introduction to ES6 features such asclasses, arrow functions, and object destructuring.
+The anatomy of this app was to have a smart container component thatwould pas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="what I learned building these apps">
+<meta property="og:url" content="http://yoursite.com/2016/06/01/what-I-learned-building-these-apps/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="The basic counter app was my first introduction to ES6 features such asclasses, arrow functions, and object destructuring.
+The anatomy of this app was to have a smart container component thatwould pas">
+<meta property="og:updated_time" content="2016-06-02T00:41:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="what I learned building these apps">
+<meta name="twitter:description" content="The basic counter app was my first introduction to ES6 features such asclasses, arrow functions, and object destructuring.
+The anatomy of this app was to have a smart container component thatwould pas">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-what-I-learned-building-these-apps" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/01/what-I-learned-building-these-apps/" class="article-date">
+  <time datetime="2016-06-01T22:27:22.000Z" itemprop="datePublished">2016-06-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      what I learned building these apps
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>The basic counter app was my first introduction to ES6 features such as<br>classes, arrow functions, and object destructuring.</p>
+<p>The anatomy of this app was to have a smart container component that<br>would pass props to a dumb app component that renders the data passed in as<br>props. This is a common architecture in the React world. In this simple example<br>the app container takes in data and methods from the store and passes them<br>to the app component. Two note worthy features are the static propTypes object<br>which validates props and the process of placing all props in an object in the<br>render method and then passing them at once with the {…props} syntax.</p>
+<p>Let’s take a walk through what our store is doing. Redux is distinguished from<br>Flux in that it only uses one store. This store contains all the data for your app.<br>In our counter app we have a store directory with an index.js file that defines our<br>store class. The store class has a state object that is initialized on creation<br>of a store class instance. The state object contains one property, count, which<br>is initially set to zero.</p>
+<p>Next the observe method of our store class is defined. This takes a callback<br>function as a parameter. This callback function is assigned as the value of<br>the store class’s observer property. emitChange is a store class instance method<br>that calls the observer callback function. Note in the index.js (webpack entry point)<br>file at the root level of our app directory we create a store and give its<br>observer callback function. The function we give is for ReactDOM to render our<br>AppContainer component inside the id=app DOM element. What this ultimately translates<br>to is that when emitChange occurs (which is called whenever the store’s state is changed)<br>the entire App re-renders. To those familiar with React this is obvious, this is<br>the whole point of one-way data flow.</p>
+<p>Our store class defines the methods inc and dec which alter the state of the store<br>and thus call emitChange. At the bottom of the file we then export our createStore<br>function which initializes a store as long as one doesn’t already exist. This<br>check is because in accordance with the Redux architecture the store should be<br>a singleton object.</p>
+<p>The multi-counter app takes the basic counter app and extends to allow for an<br>arbitrary number of counters. This is achieved by storing an array of instances<br>of a counter class in the store’s state object. These counter class instances<br>have attributes (count) and methods (inc, dec, reset) in good ol’ fashioned<br>OO design. This allows us to pass the store to the AppContainer component and<br>destructure the store prop, extracting the methods we defined and calling them<br>on the click of buttons, which in turn causes everything to re-render with the<br>updated data.</p>
+<p>The qsort app takes the same basic architecture of our counter apps. It has an app directory<br>with a root level index.js file that serves as our webpack entry point for our build.<br>This file imports the appropriate modules like React, ReactDOM, the store, and AppContainer.<br>A root DOM node is selected and the store’s observer callback is ReactDOM.render with<br>our AppContainer component given store as a prop, which is then placed inside our<br>selected DOM node.</p>
+<p>This app becomes a little more complicated in how we visualize the progression of<br>quicksort using recursive method calls in our store.</p>
+<p>To refresh your memory, quicksort is a sorting algorithm that takes an array of<br>sortable values, selects a pivot, partitions the array around this pivot, and returns<br>the concatenation of a recursive call to the left (smaller) partition, the pivot itself,<br>and a recursive call to right (greater) partition.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/06/01/what-I-learned-building-these-apps/" data-id="cioxkvocv0003n5f1zmcy8j8a" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/05/28/webpack-config-basics/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">webpack config basics</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Arkiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Siste innlegg</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/06/01/what-I-learned-building-these-apps/">what I learned building these apps</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/28/webpack-config-basics/">webpack config basics</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/15/icons-using-fonts/">icons using fonts</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/15/first-post/">first post</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/15/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
